@@ -10,9 +10,9 @@ import clustering
 import reports
 import database
 
-st.set_page_config(layout="wide", page_title="Customer Segmentation")
-st.title("🛍️ E-Commerce Customer Segmentation System")
-
+st.set_page_config(layout="wide", page_title="TrendTribe")
+st.title("🛍️ TrendTribe")
+st.markdown("#### *AI-Powered E-Commerce Customer Segmentation & Insights*")
 # State Management (Removed algo_comparison)
 for key in ["raw_df", "clean_df", "clustered_df", "metrics_df", "best_k", "feature_cols", "cluster_profile"]:
     if key not in st.session_state:
