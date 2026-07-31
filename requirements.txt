@@ -3,6 +3,5 @@ pandas
 numpy
 scikit-learn
 plotly
-ydata-profiling
 google-genai
 tabulate
