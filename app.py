@@ -13,6 +13,7 @@ import database
 st.set_page_config(layout="wide", page_title="TrendTribe")
 st.title("🛍️ TrendTribe")
 st.markdown("#### *AI-Powered E-Commerce Customer Segmentation & Insights*")
+
 # State Management (Removed algo_comparison)
 for key in ["raw_df", "clean_df", "clustered_df", "metrics_df", "best_k", "feature_cols", "cluster_profile"]:
     if key not in st.session_state:
@@ -69,15 +70,15 @@ with tabs[1]:
             y_col = st.selectbox("Y-Axis", numeric_cols, index=min(1, len(numeric_cols)-1))
             hue_col = st.selectbox("Hue (Color)", ["None"] + df.columns.tolist())
             hue = None if hue_col == "None" else hue_col
-            st.plotly_chart(EDA.plot_dynamic_scatter(df, x_col, y_col, hue), use_container_width=True)
+            st.plotly_chart(EDA.plot_dynamic_scatter(df, x_col, y_col, hue), width="stretch")
             
         with col2:
             st.subheader("Box Plot")
             box_y = st.selectbox("Analyze Distribution of:", numeric_cols)
-            st.plotly_chart(EDA.plot_box(df, box_y), use_container_width=True)
+            st.plotly_chart(EDA.plot_box(df, box_y), width="stretch")
             
         st.subheader("Correlation Heatmap")
-        st.plotly_chart(EDA.plot_correlation(df), use_container_width=True)
+        st.plotly_chart(EDA.plot_correlation(df), width="stretch")
     else:
         st.info("Upload data in Tab 1 first.")
 
@@ -117,7 +118,7 @@ with tabs[3]:
             st.session_state.best_k = clustering.suggest_best_k(metrics)
             
         if st.session_state.metrics_df is not None:
-            st.plotly_chart(clustering.plot_elbow(st.session_state.metrics_df), use_container_width=True)
+            st.plotly_chart(clustering.plot_elbow(st.session_state.metrics_df), width="stretch")
             st.info(f"💡 Suggested k based on K-Means Silhouette Score: **{st.session_state.best_k}**")
     else:
         st.info("Complete preprocessing in Tab 3 first.")
@@ -141,7 +142,7 @@ with tabs[4]:
             st.subheader("RFM Combination Analysis")
             if len(feat) >= 3:
                 fig_rfm = clustering.plot_rfm_subplots(st.session_state.clustered_df, feat)
-                if fig_rfm: st.plotly_chart(fig_rfm, use_container_width=True)
+                if fig_rfm: st.plotly_chart(fig_rfm, width="stretch")
                 else: st.info("Could not generate RFM plots.")
             else:
                 st.info("Select 3 or more features in Tab 4 to enable the 3-panel visualization.")
@@ -149,7 +150,7 @@ with tabs[4]:
             st.divider()
             if len(feat) >= 3:
                 st.subheader("Segment Radar Profiles")
-                st.plotly_chart(clustering.plot_radar_chart(st.session_state.clustered_df, feat), use_container_width=True)
+                st.plotly_chart(clustering.plot_radar_chart(st.session_state.clustered_df, feat), width="stretch")
     else:
         st.info("Find optimal k in Tab 4 first.")
 
